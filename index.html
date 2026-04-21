@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranit Samanta — Financial Modelling Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e17;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --border: #1e293b;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent2: #818cf8;
+  --green: #4ade80;
+  --red: #f87171;
+  --gold: #fbbf24;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.noise {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO */
+.hero {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--text), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 600px;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-meta span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+/* STATS BAR */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 48px 0;
+}
+
+.stat {
+  background: var(--surface);
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* SECTIONS */
+.section {
+  padding: 56px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 12px;
+}
+
+.section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.section p {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 16px;
+  max-width: 720px;
+}
+
+/* METHODOLOGY FLOW */
+.flow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.flow-step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+}
+
+.flow-step::before {
+  content: attr(data-step);
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  color: var(--surface2);
+  position: absolute;
+  top: 12px;
+  right: 16px;
+}
+
+.flow-step h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.flow-step p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* VALUATION BRIDGE */
+.bridge {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin: 32px 0;
+}
+
+.bridge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.bridge-row:last-child { border-bottom: none; }
+
+.bridge-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.bridge-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.bridge-value.positive { color: var(--green); }
+.bridge-value.negative { color: var(--red); }
+.bridge-value.highlight { color: var(--gold); font-size: 18px; }
+
+/* REVENUE CHART */
+.chart-container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin: 32px 0;
+}
+
+.chart-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 200px;
+  padding-bottom: 30px;
+  position: relative;
+}
+
+.bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bar {
+  width: 100%;
+  max-width: 60px;
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.bar.actual { background: linear-gradient(180deg, var(--accent), #1e6091); }
+.bar.forecast { background: linear-gradient(180deg, var(--accent2), #4338ca); opacity: 0.8; }
+
+.bar:hover { transform: scaleY(1.02); filter: brightness(1.2); }
+
+.bar-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.bar-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+/* SENSITIVITY TABLE */
+.sensitivity-container {
+  margin: 32px 0;
+}
+
+.sensitivity-img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.sensitivity-caption {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* EV PIE */
+.ev-split {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  margin: 32px 0;
+}
+
+.ev-visual {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 0deg 68deg, var(--accent2) 68deg 360deg);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ev-visual::after {
+  content: '';
+  position: absolute;
+  top: 30px; left: 30px; right: 30px; bottom: 30px;
+  background: var(--bg);
+  border-radius: 50%;
+}
+
+.ev-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ev-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ev-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.ev-dot.dcf { background: var(--accent); }
+.ev-dot.tv { background: var(--accent2); }
+
+.ev-text h5 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.ev-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* KEY INSIGHT */
+.insight {
+  background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(129,140,248,0.08));
+  border: 1px solid rgba(56,189,248,0.2);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin: 32px 0;
+}
+
+.insight h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.insight p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* DOWNLOAD & CONTACT */
+.cta-row {
+  display: flex;
+  gap: 16px;
+  margin: 32px 0;
+  flex-wrap: wrap;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.cta-btn.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.cta-btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.cta-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+/* FOOTER */
+.footer {
+  padding: 48px 0;
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 16px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .hero h1 { font-size: 32px; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .flow { grid-template-columns: 1fr; }
+  .ev-split { flex-direction: column; }
+  .bar-chart { height: 150px; }
+}
+</style>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Financial Modelling Portfolio</div>
+  <h1>Ranit Samanta</h1>
+  <p class="hero-subtitle">MSc Finance graduate building precision financial models. ACCA student. Focused on fund accounting and asset management operations.</p>
+  <div class="hero-meta">
+    <span>MSc Finance — Nottingham Trent University</span>
+    <span>ACCA — Applied Knowledge Complete</span>
+    <span>Bloomberg BMC Certified</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value">607</div>
+    <div class="stat-label">Formulas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">0</div>
+    <div class="stat-label">Errors</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">4</div>
+    <div class="stat-label">Linked Sheets</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">10</div>
+    <div class="stat-label">Years of Data</div>
+  </div>
+</div>
+
+<!-- PROJECT OVERVIEW -->
+<section class="section">
+  <div class="section-label">Featured Project</div>
+  <h2>Procter & Gamble — Three-Statement DCF Valuation</h2>
+  <p>A fully integrated financial model built from scratch using P&G's public 10-K filings (FY2020–2025 actuals, FY2026–2030 forecasts). Income Statement, Balance Sheet, and Cash Flow Statement are cross-linked with automated reconciliation — if one cell changes, every downstream output updates and the balance check must return zero.</p>
+  <p>The model includes a complete DCF valuation using both Gordon Growth Model and Exit Multiple methodology, with a sensitivity analysis testing implied share price across 35 different assumption combinations.</p>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="section">
+  <div class="section-label">Methodology</div>
+  <h2>How I Built It</h2>
+
+  <div class="flow">
+    <div class="flow-step" data-step="01">
+      <h4>Data Collection</h4>
+      <p>Extracted 6 years of historical financials from P&G's SEC 10-K filings. Every line item traced to the source document.</p>
+    </div>
+    <div class="flow-step" data-step="02">
+      <h4>Three-Statement Model</h4>
+      <p>Built linked IS, BS, and CFS with automated cross-references. Revenue drivers, working capital, CapEx, D&A, and debt schedules all flow through.</p>
+    </div>
+    <div class="flow-step" data-step="03">
+      <h4>Assumption Engine</h4>
+      <p>Dedicated assumptions sheet drives all forecasts. Revenue growth, margins, tax rates, and capital structure — change one input, see the full impact.</p>
+    </div>
+    <div class="flow-step" data-step="04">
+      <h4>WACC Calculation</h4>
+      <p>Cost of equity via CAPM (Rf: 4.5%, β: 0.6, ERP: 5.5%). Cost of debt from actual interest expense. Market-cap weighted capital structure.</p>
+    </div>
+    <div class="flow-step" data-step="05">
+      <h4>DCF Valuation</h4>
+      <p>5-year explicit forecast, terminal value via Gordon Growth (perpetuity) and Exit Multiple (16x EBITDA). Enterprise value bridge to implied share price.</p>
+    </div>
+    <div class="flow-step" data-step="06">
+      <h4>Sensitivity Analysis</h4>
+      <p>7×5 matrix testing WACC (5.5%–8.5%) against terminal growth rate (1.5%–3.5%). Colour-coded to show overvalued vs undervalued scenarios.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE CHART -->
+<section class="section">
+  <div class="section-label">Financial Performance</div>
+  <h2>P&G Revenue — Actuals vs Forecast</h2>
+
+  <div class="chart-container">
+    <div class="chart-title">Net Sales ($M) — FY2020 to FY2030</div>
+    <div class="bar-chart">
+      <div class="bar-group">
+        <div class="bar-value">$71.0B</div>
+        <div class="bar actual" style="height: 65%"></div>
+        <div class="bar-label">FY20</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$76.1B</div>
+        <div class="bar actual" style="height: 70%"></div>
+        <div class="bar-label">FY21</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$80.2B</div>
+        <div class="bar actual" style="height: 74%"></div>
+        <div class="bar-label">FY22</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$82.0B</div>
+        <div class="bar actual" style="height: 75%"></div>
+        <div class="bar-label">FY23</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$84.0B</div>
+        <div class="bar actual" style="height: 77%"></div>
+        <div class="bar-label">FY24</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$84.3B</div>
+        <div class="bar actual" style="height: 77%"></div>
+        <div class="bar-label">FY25</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$86.8B</div>
+        <div class="bar forecast" style="height: 80%"></div>
+        <div class="bar-label">FY26E</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$89.4B</div>
+        <div class="bar forecast" style="height: 82%"></div>
+        <div class="bar-label">FY27E</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$91.9B</div>
+        <div class="bar forecast" style="height: 85%"></div>
+        <div class="bar-label">FY28E</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$94.2B</div>
+        <div class="bar forecast" style="height: 87%"></div>
+        <div class="bar-label">FY29E</div>
+      </div>
+      <div class="bar-group">
+        <div class="bar-value">$96.3B</div>
+        <div class="bar forecast" style="height: 89%"></div>
+        <div class="bar-label">FY30E</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUATION BRIDGE -->
+<section class="section">
+  <div class="section-label">Valuation Output</div>
+  <h2>Enterprise Value to Implied Share Price</h2>
+
+  <div class="bridge">
+    <div class="bridge-row">
+      <span class="bridge-label">Sum of PV of Free Cash Flows (FY26–30)</span>
+      <span class="bridge-value">$67,743M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">(+) PV of Terminal Value — Gordon Growth</span>
+      <span class="bridge-value">$261,102M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Enterprise Value</span>
+      <span class="bridge-value highlight">$328,845M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">(−) Total Debt</span>
+      <span class="bridge-value negative">−$34,508M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">(+) Cash & Equivalents</span>
+      <span class="bridge-value positive">+$9,556M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Equity Value</span>
+      <span class="bridge-value">$303,893M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">÷ Shares Outstanding</span>
+      <span class="bridge-value">2,409M</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Implied Share Price (Gordon Growth)</span>
+      <span class="bridge-value highlight">$126.15</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Implied Share Price (Exit Multiple)</span>
+      <span class="bridge-value highlight">$136.15</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Current Market Price</span>
+      <span class="bridge-value">$165.00</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Verdict</span>
+      <span class="bridge-value negative">Overvalued by ~17–24%</span>
+    </div>
+  </div>
+</section>
+
+<!-- EV SPLIT -->
+<section class="section">
+  <div class="section-label">Key Insight</div>
+  <h2>Where Does Enterprise Value Come From?</h2>
+
+  <div class="ev-split">
+    <div class="ev-visual"></div>
+    <div class="ev-legend">
+      <div class="ev-item">
+        <div class="ev-dot dcf"></div>
+        <div class="ev-text">
+          <h5>Explicit FCF Period (FY26–30) — 21%</h5>
+          <span>$67,743M — The 5-year forecast period where we project each line item individually</span>
+        </div>
+      </div>
+      <div class="ev-item">
+        <div class="ev-dot tv"></div>
+        <div class="ev-text">
+          <h5>Terminal Value — 79%</h5>
+          <span>$261,102M — All value beyond Year 5, driven by one assumption: the terminal growth rate. Change it by 50bps and the implied price swings $15–20.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <h4>Why This Matters</h4>
+    <p>Nearly 80% of P&G's enterprise value comes from a single assumption about long-term growth. This taught me that valuation isn't about getting THE answer — it's about understanding which assumptions drive the answer and testing them honestly. The sensitivity table below shows exactly how much the output changes when you adjust WACC and terminal growth rate simultaneously.</p>
+  </div>
+</section>
+
+<!-- SENSITIVITY TABLE -->
+<section class="section">
+  <div class="section-label">Sensitivity Analysis</div>
+  <h2>Implied Share Price Matrix</h2>
+  <p>WACC (vertical) vs Terminal Growth Rate (horizontal). Green cells indicate undervalued relative to market price ($165). Red cells indicate overvalued.</p>
+
+  <!-- Replace this with your actual screenshot -->
+  <div class="sensitivity-container">
+    <img src="sensitivity_table.png" alt="P&G Sensitivity Analysis — Implied Share Price across WACC and Terminal Growth Rate assumptions" class="sensitivity-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div style="display:none; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 40px; text-align: center; color: var(--text-muted);">
+      <p>Sensitivity table image — upload sensitivity_table.png to your GitHub repository</p>
+    </div>
+    <p class="sensitivity-caption">7×5 matrix: WACC ranges from 5.5% to 8.5%, Terminal Growth Rate from 1.5% to 3.5%. Model suggests P&G is moderately overvalued at current market price.</p>
+  </div>
+</section>
+
+<!-- WACC BREAKDOWN -->
+<section class="section">
+  <div class="section-label">Capital Structure</div>
+  <h2>WACC Components</h2>
+
+  <div class="bridge">
+    <div class="bridge-row">
+      <span class="bridge-label">Risk-Free Rate (10Y US Treasury)</span>
+      <span class="bridge-value">4.50%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Beta (β)</span>
+      <span class="bridge-value">0.60</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Equity Risk Premium</span>
+      <span class="bridge-value">5.50%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Cost of Equity (CAPM)</span>
+      <span class="bridge-value highlight">7.80%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Pre-tax Cost of Debt</span>
+      <span class="bridge-value">2.63%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Tax Rate</span>
+      <span class="bridge-value">20.0%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">After-tax Cost of Debt</span>
+      <span class="bridge-value">2.10%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Weight of Equity</span>
+      <span class="bridge-value">91.3%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">Weight of Debt</span>
+      <span class="bridge-value">8.7%</span>
+    </div>
+    <div class="bridge-row">
+      <span class="bridge-label">WACC</span>
+      <span class="bridge-value highlight">7.30%</span>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD & CONTACT -->
+<section class="section">
+  <div class="section-label">Downloads</div>
+  <h2>Get the Full Report</h2>
+  <p>The complete project report includes detailed methodology notes, assumption rationale, limitation analysis, and recommendations.</p>
+
+  <div class="cta-row">
+    <a href="PG_Model_Project_Report.pdf" class="cta-btn primary" download>↓ Download Project Report (PDF)</a>
+    <a href="https://linkedin.com/in/ranit-samanta-1b0173184/" class="cta-btn secondary" target="_blank">View LinkedIn Profile →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section">
+  <div class="section-label">About</div>
+  <h2>Ranit Samanta</h2>
+  <p>Finance graduate who spent three weeks debugging a Balance Sheet that wouldn't reconcile — and built a complete P&G DCF valuation model in the process. MSc Finance (Nottingham Trent University, UK), B.Com Accounting Honours (University of Calcutta), ACCA student with Applied Knowledge complete (Performance Management — June 2026).</p>
+  <p>Three years of daily cash reconciliation alongside studies. Bloomberg Market Concepts certified. Currently seeking opportunities in fund accounting, investment operations, and asset management operations across India and Europe.</p>
+  <p style="color: var(--text); margin-top: 24px;">
+    <strong>Email:</strong> ranitsamanta74@gmail.com<br>
+    <strong>Phone:</strong> +44 7867 063751<br>
+    <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/ranit-samanta-1b0173184/" style="color: var(--accent);">linkedin.com/in/ranit-samanta</a>
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="mailto:ranitsamanta74@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/ranit-samanta-1b0173184/" target="_blank">LinkedIn</a>
+  </div>
+  <p class="footer-copy">© 2026 Ranit Samanta. Built with precision — like the model.</p>
+</footer>
+
+</div>
+
+</body>
+</html>
