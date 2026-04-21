@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P&G DCF Valuation — Project Report</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --surface2: #f1f5f9;
+  --border: #e2e8f0;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --accent: #1e40af;
+  --accent-light: #3b82f6;
+  --accent-bg: #eff6ff;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --gold: #d97706;
+  --gold-bg: #fffbeb;
+  --purple: #7c3aed;
+  --purple-bg: #f5f3ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--text);
+  line-height: 1.8;
+  font-weight: 300;
+  background: var(--bg);
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 48px;
+}
+
+/* COVER */
+.cover {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 60px;
+  margin-bottom: 48px;
+}
+
+.cover-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.cover h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.cover-sub {
+  font-size: 20px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.cover-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.cover-stat {
+  background: var(--surface);
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.cover-stat-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--accent);
+}
+
+.cover-stat-lbl {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.cover-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 2;
+}
+
+.cover-meta strong { color: var(--text); font-weight: 500; }
+
+/* SECTIONS */
+.section {
+  margin-bottom: 48px;
+  page-break-inside: avoid;
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--surface2);
+}
+
+.section p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+/* CALLOUT BOXES */
+.callout {
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  border-left: 4px solid;
+}
+
+.callout.blue { background: var(--accent-bg); border-color: var(--accent); }
+.callout.green { background: var(--green-bg); border-color: var(--green); }
+.callout.red { background: var(--red-bg); border-color: var(--red); }
+.callout.gold { background: var(--gold-bg); border-color: var(--gold); }
+.callout.purple { background: var(--purple-bg); border-color: var(--purple); }
+
+.callout h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.callout.blue h4 { color: var(--accent); }
+.callout.green h4 { color: var(--green); }
+.callout.red h4 { color: var(--red); }
+.callout.gold h4 { color: var(--gold); }
+.callout.purple h4 { color: var(--purple); }
+
+.callout p { color: var(--text); font-size: 13px; margin-bottom: 0; }
+
+/* DATA TABLE */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 13px;
+}
+
+.data-table th {
+  background: var(--accent);
+  color: white;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.data-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table tr:nth-child(even) { background: var(--surface); }
+
+.data-table .num {
+  font-family: 'JetBrains Mono', monospace;
+  text-align: right;
+  font-size: 12px;
+}
+
+.data-table .label { font-weight: 500; }
+
+.data-table .highlight { background: var(--accent-bg) !important; font-weight: 600; }
+
+/* BAR CHART */
+.chart-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.chart-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.h-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.h-bar-label {
+  width: 60px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: right;
+  padding-right: 12px;
+  flex-shrink: 0;
+}
+
+.h-bar-track {
+  flex: 1;
+  height: 24px;
+  background: var(--surface2);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.h-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+}
+
+.h-bar-fill.actual { background: linear-gradient(90deg, var(--accent), var(--accent-light)); }
+.h-bar-fill.forecast { background: linear-gradient(90deg, var(--purple), #a78bfa); }
+
+.h-bar-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: white;
+  font-weight: 500;
+}
+
+/* DONUT */
+.donut-section {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.donut {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 0deg 76deg, var(--purple) 76deg 360deg);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.donut::after {
+  content: '';
+  position: absolute;
+  top: 35px; left: 35px; right: 35px; bottom: 35px;
+  background: white;
+  border-radius: 50%;
+}
+
+.donut-legend { flex: 1; }
+
+.donut-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.donut-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.donut-dot.a { background: var(--accent); }
+.donut-dot.b { background: var(--purple); }
+
+.donut-text h5 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.donut-text span { font-size: 12px; color: var(--text-muted); }
+
+/* BRIDGE */
+.bridge-table {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.bridge-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.bridge-row:nth-child(even) { background: var(--surface); }
+
+.bridge-row.total {
+  background: var(--accent-bg);
+  font-weight: 600;
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  margin: 4px 0;
+}
+
+.bridge-row.result {
+  background: var(--gold-bg);
+  font-weight: 600;
+  border: 2px solid var(--gold);
+  border-radius: 6px;
+  margin: 4px 0;
+}
+
+.bridge-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+}
+
+.bridge-val.neg { color: var(--red); }
+.bridge-val.pos { color: var(--green); }
+
+/* SENSITIVITY PLACEHOLDER */
+.sensitivity-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.sensitivity-box img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.sensitivity-caption {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+
+/* FOOTER */
+.report-footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 2px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.report-footer a { color: var(--accent); text-decoration: none; }
+
+@media print {
+  .page { padding: 40px 32px; }
+  .cover { min-height: auto; page-break-after: always; }
+  .section { page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- COVER PAGE -->
+<section class="cover">
+  <div class="cover-tag">Independent Financial Modelling Project</div>
+  <h1>Procter & Gamble<br>Three-Statement DCF Valuation</h1>
+  <p class="cover-sub">A fully integrated financial model built from P&G's public 10-K filings, with discounted cash flow valuation, terminal value analysis, and sensitivity testing across 35 assumption combinations.</p>
+
+  <div class="cover-stats">
+    <div class="cover-stat">
+      <div class="cover-stat-val">607</div>
+      <div class="cover-stat-lbl">Formulas</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">0</div>
+      <div class="cover-stat-lbl">Errors</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">10</div>
+      <div class="cover-stat-lbl">Years of Data</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">4</div>
+      <div class="cover-stat-lbl">Linked Sheets</div>
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <strong>Author:</strong> Ranit Samanta<br>
+    <strong>Qualifications:</strong> MSc Finance (Nottingham Trent University, UK) | B.Com Accounting Honours | ACCA Student<br>
+    <strong>Date:</strong> January — March 2026<br>
+    <strong>Data Source:</strong> P&G SEC 10-K Filings (FY2020–FY2025)<br>
+    <strong>Contact:</strong> ranitsamanta74@gmail.com | +44 7867 063751
+  </div>
+</section>
+
+<!-- 1. EXECUTIVE SUMMARY -->
+<section class="section">
+  <div class="section-num">01 — Executive Summary</div>
+  <h2>What This Model Says About P&G</h2>
+
+  <p>This model values Procter & Gamble (NYSE: PG) using a discounted cash flow methodology based on 6 years of historical financials and 5 years of projected free cash flows. The analysis suggests P&G is moderately overvalued at current market prices.</p>
+
+  <div class="callout red">
+    <h4>Key Finding</h4>
+    <p>The Gordon Growth Model implies a share price of <strong>$126.15</strong> and the Exit Multiple method implies <strong>$136.15</strong> — both significantly below the current market price of <strong>$165.00</strong>. This suggests P&G may be overvalued by approximately <strong>17–24%</strong>.</p>
+  </div>
+
+  <div class="callout gold">
+    <h4>Critical Caveat</h4>
+    <p>A model is a framework, not a trading signal. Nearly 80% of the enterprise value comes from the terminal value assumption. Changing the terminal growth rate by just 50 basis points swings the implied share price by $15–20. The value of this model is not the output — it's the discipline of building it.</p>
+  </div>
+</section>
+
+<!-- 2. COMPANY OVERVIEW -->
+<section class="section">
+  <div class="section-num">02 — Company Overview</div>
+  <h2>Why Procter & Gamble?</h2>
+
+  <p>P&G is the world's largest consumer goods company by market capitalisation, with a portfolio of brands including Tide, Pampers, Gillette, and Oral-B. It generates over $84 billion in annual revenue across 180+ countries.</p>
+
+  <p>I chose P&G for three reasons: its financial statements are complex enough to test a genuine three-statement model (multiple segments, significant intangibles, currency translation effects), its 10-K filings are publicly available with detailed disclosure, and its stable business model makes revenue forecasting feasible without speculative assumptions.</p>
+
+  <div class="chart-box">
+    <div class="chart-title">Net Sales ($M) — FY2020 to FY2030E</div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY20</span>
+      <div class="h-bar-track"><div class="h-bar-fill actual" style="width:74%"><span class="h-bar-val">$70,950</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY21</span>
+      <div class="h-bar-track"><div class="h-bar-fill actual" style="width:79%"><span class="h-bar-val">$76,118</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY22</span>
+      <div class="h-bar-track"><div class="h-bar-fill actual" style="width:83%"><span class="h-bar-val">$80,187</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY23</span>
+      <div class="h-bar-track"><div class="h-bar-fill actual" style="width:85%"><span class="h-bar-val">$82,006</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY24</span>
+      <div class="h-bar-track"><div class="h-bar-fill actual" style="width:87%"><span class="h-bar-val">$84,039</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY25</span>
+      <div class="h-bar-track"><div class="h-bar-fill actual" style="width:87%"><span class="h-bar-val">$84,284</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY26E</span>
+      <div class="h-bar-track"><div class="h-bar-fill forecast" style="width:90%"><span class="h-bar-val">$86,813</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY27E</span>
+      <div class="h-bar-track"><div class="h-bar-fill forecast" style="width:93%"><span class="h-bar-val">$89,417</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY28E</span>
+      <div class="h-bar-track"><div class="h-bar-fill forecast" style="width:95%"><span class="h-bar-val">$91,921</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY29E</span>
+      <div class="h-bar-track"><div class="h-bar-fill forecast" style="width:97%"><span class="h-bar-val">$94,218</span></div></div>
+    </div>
+    <div class="h-bar">
+      <span class="h-bar-label">FY30E</span>
+      <div class="h-bar-track"><div class="h-bar-fill forecast" style="width:100%"><span class="h-bar-val">$96,353</span></div></div>
+    </div>
+  </div>
+  <p style="font-size:11px; color:var(--text-muted);">Blue = Actual reported figures | Purple = Model forecasts based on assumed growth rates (3.0% declining to 2.3%)</p>
+</section>
+
+<!-- 3. MODEL ARCHITECTURE -->
+<section class="section">
+  <div class="section-num">03 — Model Architecture</div>
+  <h2>How the Statements Connect</h2>
+
+  <p>The model consists of four worksheets — Assumptions, Statements (IS + BS + CFS), Statement of Equity, and DCF — all cross-linked so that changing any single assumption cascades through every output.</p>
+
+  <div class="callout blue">
+    <h4>The Reconciliation Challenge</h4>
+    <p>The hardest part of this project wasn't calculating WACC or terminal value. It was making the Balance Sheet balance. Every new line item I added would break something downstream. A working capital change wouldn't flow to cash flow. A depreciation figure wouldn't reconcile to the asset schedule. I had to trace every formula, cell by cell, until the Balance Check row returned zero across all five forecast years.</p>
+  </div>
+
+  <table class="data-table">
+    <tr><th>Sheet</th><th>Purpose</th><th>Key Outputs</th></tr>
+    <tr><td class="label">Assumptions</td><td>Revenue drivers, margin forecasts, CapEx ratios, tax rates</td><td>All forecast inputs in one place</td></tr>
+    <tr><td class="label">Income Statement</td><td>Revenue → Gross Profit → Operating Income → Net Earnings</td><td>Net Earnings: $15.7B (FY26E)</td></tr>
+    <tr><td class="label">Balance Sheet</td><td>Assets, Liabilities, Equity with automated balance check</td><td>Balance check = $0.00 ✓</td></tr>
+    <tr><td class="label">Cash Flow Statement</td><td>Operating, Investing, Financing activities</td><td>FCF: $16.3B (FY26E)</td></tr>
+    <tr><td class="label">Statement of Equity</td><td>Retained earnings, treasury stock, OCI movements</td><td>Links BS equity to IS net income</td></tr>
+    <tr><td class="label">DCF</td><td>WACC, terminal value, sensitivity analysis</td><td>Implied price: $126–$136</td></tr>
+  </table>
+</section>
+
+<!-- 4. KEY ASSUMPTIONS -->
+<section class="section">
+  <div class="section-num">04 — Key Assumptions</div>
+  <h2>What Drives the Forecast</h2>
+
+  <table class="data-table">
+    <tr><th>Assumption</th><th>FY26E</th><th>FY27E</th><th>FY28E</th><th>FY29E</th><th>FY30E</th><th>Rationale</th></tr>
+    <tr><td class="label">Revenue Growth</td><td class="num">3.0%</td><td class="num">3.0%</td><td class="num">2.8%</td><td class="num">2.5%</td><td class="num">2.3%</td><td>Declining toward GDP growth as market matures</td></tr>
+    <tr><td class="label">Gross Margin</td><td class="num">50.5%</td><td class="num">50.5%</td><td class="num">50.5%</td><td class="num">50.5%</td><td class="num">50.5%</td><td>Stable; reflects pricing power vs input costs</td></tr>
+    <tr><td class="label">SG&A % Revenue</td><td class="num">27.5%</td><td class="num">27.5%</td><td class="num">27.5%</td><td class="num">27.5%</td><td class="num">27.5%</td><td>Consistent with 5-year historical average</td></tr>
+    <tr><td class="label">Tax Rate</td><td class="num">20.0%</td><td class="num">20.0%</td><td class="num">20.0%</td><td class="num">20.0%</td><td class="num">20.0%</td><td>Effective rate based on recent filings</td></tr>
+    <tr><td class="label">CapEx % Revenue</td><td class="num">4.0%</td><td class="num">4.0%</td><td class="num">4.0%</td><td class="num">4.0%</td><td class="num">4.0%</td><td>Aligned with management guidance</td></tr>
+    <tr><td class="label">D&A % Revenue</td><td class="num">3.6%</td><td class="num">3.6%</td><td class="num">3.6%</td><td class="num">3.6%</td><td class="num">3.6%</td><td>Historical average maintained</td></tr>
+  </table>
+</section>
+
+<!-- 5. WACC -->
+<section class="section">
+  <div class="section-num">05 — Cost of Capital</div>
+  <h2>WACC Calculation</h2>
+
+  <p>The Weighted Average Cost of Capital (WACC) is the discount rate applied to future free cash flows. It reflects the blended cost of P&G's equity and debt financing.</p>
+
+  <table class="data-table">
+    <tr><th>Component</th><th>Value</th><th>Source / Method</th></tr>
+    <tr><td class="label">Risk-Free Rate</td><td class="num">4.50%</td><td>10-Year US Treasury yield</td></tr>
+    <tr><td class="label">Beta (β)</td><td class="num">0.60</td><td>5-year monthly regression vs S&P 500</td></tr>
+    <tr><td class="label">Equity Risk Premium</td><td class="num">5.50%</td><td>Damodaran implied ERP</td></tr>
+    <tr class="highlight"><td class="label">Cost of Equity (CAPM)</td><td class="num">7.80%</td><td>Rf + β × ERP</td></tr>
+    <tr><td class="label">Pre-tax Cost of Debt</td><td class="num">2.63%</td><td>Interest Expense / Total Debt</td></tr>
+    <tr><td class="label">After-tax Cost of Debt</td><td class="num">2.10%</td><td>Pre-tax × (1 − Tax Rate)</td></tr>
+    <tr><td class="label">Weight of Equity</td><td class="num">91.3%</td><td>Market Cap / (Market Cap + Debt)</td></tr>
+    <tr><td class="label">Weight of Debt</td><td class="num">8.7%</td><td>Debt / (Market Cap + Debt)</td></tr>
+    <tr class="highlight"><td class="label">WACC</td><td class="num">7.30%</td><td>Weighted average of Ke and Kd</td></tr>
+  </table>
+
+  <div class="callout purple">
+    <h4>Observation</h4>
+    <p>P&G's low beta (0.60) reflects its defensive nature — consumer staples demand is relatively insensitive to economic cycles. This results in a lower cost of equity than the broader market, which in turn increases the present value of future cash flows and supports a higher valuation. The model's sensitivity to WACC is tested in Section 8.</p>
+  </div>
+</section>
+
+<!-- 6. FREE CASH FLOW -->
+<section class="section">
+  <div class="section-num">06 — Free Cash Flow Projection</div>
+  <h2>Cash Available to All Investors</h2>
+
+  <table class="data-table">
+    <tr><th>($M)</th><th>FY26E</th><th>FY27E</th><th>FY28E</th><th>FY29E</th><th>FY30E</th></tr>
+    <tr><td class="label">EBIT</td><td class="num">19,967</td><td class="num">20,566</td><td class="num">21,142</td><td class="num">21,670</td><td class="num">22,169</td></tr>
+    <tr><td class="label">Less: Taxes (20%)</td><td class="num">(3,993)</td><td class="num">(4,113)</td><td class="num">(4,228)</td><td class="num">(4,334)</td><td class="num">(4,434)</td></tr>
+    <tr><td class="label">NOPAT</td><td class="num">15,974</td><td class="num">16,453</td><td class="num">16,913</td><td class="num">17,336</td><td class="num">17,735</td></tr>
+    <tr><td class="label">Add: D&A</td><td class="num">3,125</td><td class="num">3,219</td><td class="num">3,309</td><td class="num">3,392</td><td class="num">3,470</td></tr>
+    <tr><td class="label">Less: CapEx</td><td class="num">(3,473)</td><td class="num">(3,577)</td><td class="num">(3,677)</td><td class="num">(3,769)</td><td class="num">(3,855)</td></tr>
+    <tr><td class="label">Less: ΔWC</td><td class="num">693</td><td class="num">73</td><td class="num">3</td><td class="num">95</td><td class="num">49</td></tr>
+    <tr class="highlight"><td class="label">Free Cash Flow</td><td class="num">16,319</td><td class="num">16,168</td><td class="num">16,548</td><td class="num">17,054</td><td class="num">17,398</td></tr>
+  </table>
+</section>
+
+<!-- 7. VALUATION -->
+<section class="section">
+  <div class="section-num">07 — Valuation Output</div>
+  <h2>Enterprise Value to Implied Share Price</h2>
+
+  <div class="bridge-table">
+    <div class="bridge-row"><span>Sum of PV of Free Cash Flows (FY26–30)</span><span class="bridge-val">$67,743M</span></div>
+    <div class="bridge-row"><span>(+) PV of Terminal Value — Gordon Growth</span><span class="bridge-val">$261,102M</span></div>
+    <div class="bridge-row total"><span>Enterprise Value</span><span class="bridge-val">$328,845M</span></div>
+    <div class="bridge-row"><span>(−) Total Debt</span><span class="bridge-val neg">−$34,508M</span></div>
+    <div class="bridge-row"><span>(+) Cash & Equivalents</span><span class="bridge-val pos">+$9,556M</span></div>
+    <div class="bridge-row"><span>Equity Value</span><span class="bridge-val">$303,893M</span></div>
+    <div class="bridge-row"><span>÷ Shares Outstanding</span><span class="bridge-val">2,409M</span></div>
+    <div class="bridge-row result"><span>Implied Share Price (Gordon Growth)</span><span class="bridge-val">$126.15</span></div>
+    <div class="bridge-row result"><span>Implied Share Price (Exit Multiple)</span><span class="bridge-val">$136.15</span></div>
+    <div class="bridge-row"><span>Current Market Price</span><span class="bridge-val">$165.00</span></div>
+    <div class="bridge-row"><span>Upside / (Downside)</span><span class="bridge-val neg">−17% to −24%</span></div>
+  </div>
+
+  <div class="donut-section">
+    <div class="donut"></div>
+    <div class="donut-legend">
+      <div class="donut-item">
+        <div class="donut-dot a"></div>
+        <div class="donut-text">
+          <h5>Explicit FCF Period — 21%</h5>
+          <span>$67,743M from the 5-year forecast where each line item is projected individually</span>
+        </div>
+      </div>
+      <div class="donut-item">
+        <div class="donut-dot b"></div>
+        <div class="donut-text">
+          <h5>Terminal Value — 79%</h5>
+          <span>$261,102M from all value beyond Year 5 — driven primarily by the terminal growth rate assumption</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. SENSITIVITY -->
+<section class="section">
+  <div class="section-num">08 — Sensitivity Analysis</div>
+  <h2>How Assumptions Drive the Output</h2>
+
+  <p>The sensitivity table tests implied share price across 35 combinations of WACC (5.5%–8.5%) and terminal growth rate (1.5%–3.5%). Green cells indicate scenarios where P&G appears undervalued relative to the $165 market price; red cells indicate overvaluation.</p>
+
+  <div class="sensitivity-box">
+    <img src="sensitivity_table.png" alt="Sensitivity Analysis Table" onerror="this.style.display='none'; this.parentElement.innerHTML='<p style=\'padding:40px; color:#64748b;\'>Upload sensitivity_table.png alongside this file to display the matrix here.</p>';">
+    <p class="sensitivity-caption">7×5 matrix: WACC (5.5%–8.5%) vs Terminal Growth Rate (1.5%–3.5%). At the base case WACC of 7.3% and terminal growth of 2.5%, the model implies ~$126 per share.</p>
+  </div>
+
+  <div class="callout gold">
+    <h4>The Takeaway</h4>
+    <p>Only at very low WACC assumptions (below 6%) combined with high terminal growth rates (above 3%) does the model support the current market price. Under most reasonable assumption combinations, P&G appears overvalued — suggesting the market may be pricing in either lower risk or higher growth than our model assumes.</p>
+  </div>
+</section>
+
+<!-- 9. LIMITATIONS -->
+<section class="section">
+  <div class="section-num">09 — Limitations & Honest Assessment</div>
+  <h2>What This Model Doesn't Capture</h2>
+
+  <p>Every financial model is a simplification of reality. Here's what this one gets wrong, and why it matters:</p>
+
+  <div class="callout blue">
+    <h4>Segment-Level Analysis</h4>
+    <p>P&G operates across 5 segments (Beauty, Grooming, Health Care, Fabric & Home Care, Baby/Feminine/Family Care) with different growth profiles and margins. This model uses consolidated figures, which may mask segment-level dynamics.</p>
+  </div>
+
+  <div class="callout blue">
+    <h4>Currency Effects</h4>
+    <p>With over 50% of revenue from international markets, P&G's reported earnings are significantly affected by FX translation. The model forecasts in USD and doesn't account for currency movements.</p>
+  </div>
+
+  <div class="callout blue">
+    <h4>Static Capital Structure</h4>
+    <p>WACC is calculated based on the current capital structure and assumed constant. In reality, P&G actively manages its debt profile and share buybacks alter the equity base over time.</p>
+  </div>
+
+  <div class="callout blue">
+    <h4>Terminal Value Dominance</h4>
+    <p>79% of enterprise value comes from the terminal value — a perpetuity assumption that is inherently uncertain. This is a known limitation of all DCF models for mature, stable businesses.</p>
+  </div>
+</section>
+
+<!-- 10. WHAT I LEARNED -->
+<section class="section">
+  <div class="section-num">10 — What I Learned</div>
+  <h2>Beyond the Numbers</h2>
+
+  <p>The technical skills this project developed — WACC calculation, terminal value estimation, sensitivity analysis — are important but not the most valuable outcome.</p>
+
+  <p>The real learning was in reconciliation discipline. Every time I added a new assumption or changed a formula, something downstream would break. I developed a systematic approach: isolate the section, trace every cross-reference, test each formula individually, and only move forward when the output is clean. That process is identical to what happens in daily NAV calculation in fund accounting — where every number must reconcile before it goes to the client.</p>
+
+  <p>This project also taught me the difference between precision and accuracy. A model with 607 formulas and zero errors is precise. Whether its output reflects reality depends entirely on the quality of the assumptions. That humility — knowing that your model is only as good as your inputs — is something I'll carry into any analytical role.</p>
+
+  <div class="callout green">
+    <h4>Transferable Skills</h4>
+    <p><strong>Reconciliation:</strong> Systematic approach to identifying and resolving data discrepancies across linked financial statements.<br>
+    <strong>Attention to detail:</strong> 607 formulas verified individually; balance check returning zero across all forecast periods.<br>
+    <strong>Financial analysis:</strong> Revenue drivers, profitability trends, cash flow generation, and capital structure assessment.<br>
+    <strong>Communication:</strong> Distilling complex model outputs into clear, actionable insights with appropriate caveats.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="report-footer">
+  <p><strong>Ranit Samanta</strong> | MSc Finance, Nottingham Trent University | ACCA Student<br>
+  <a href="mailto:ranitsamanta74@gmail.com">ranitsamanta74@gmail.com</a> | +44 7867 063751 | <a href="https://linkedin.com/in/ranit-samanta-1b0173184/">LinkedIn</a><br><br>
+  <em>This report was prepared as an independent project. All data sourced from P&G's publicly available SEC filings. The analysis represents the author's own work and conclusions.</em></p>
+</div>
+
+</div>
+
+</body>
+</html>
