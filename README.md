@@ -1,2 +1,2 @@
 # ranitsamanta.github.io
-Financial Modelling Portfolio - P&amp;G Three-Statement DCF Valuation
+Ranit Samanta | MSc Finance, ACCA Student, Fund Accounting & Asset Management Operations
